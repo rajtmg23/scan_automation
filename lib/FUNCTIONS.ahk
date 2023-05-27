@@ -3,32 +3,46 @@ SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
 ; Construct the full path to the INI file using the script directory
-iniFilePath := A_ScriptDir . "\controls.ini"
+iniFilePath := ".\controls.ini"
 
 ; Read variables from the INI file
 ; ####### FOR WINDOW SECTION ###############
 IniRead, MAIN_WINDOW, %iniFilePath%, WINDOW, MAIN_WINDOW
-IniRead, MAIN_WINDOW, %iniFilePath%, WINDOW, WINDOW_SECOND
-IniRead, MAIN_WINDOW, %iniFilePath%, WINDOW, WINDOW_THIRD
+IniRead, WINDOW_SECOND, %iniFilePath%, WINDOW, WINDOW_SECOND
+IniRead, WINDOW_THIRD, %iniFilePath%, WINDOW, WINDOW_THIRD
+
+
 
 ; ######### FOR BUTTONS SECTION ############
-; Define the variable names and key names
-variables := ["CHOOSE_PROFILE", "SINGLE_SCAN", "MULTIPLE_SCAN", "SINGLE_FILE", "FILE_PATH_NAME", "START_BUTTON", "NEXT_SCAN", "FINISH_SCAN"]
-
-; Loop through the variables array to read the values from the INI file and set them as global variables
-for index, variable in variables
-{
-    key := variable
-    IniRead, %variable%, %iniFilePath%, OPTION_BUTTON, %key%
-    global %variable% := %variable%
-    ; %variable% := %variable%
-}
+IniRead, CHOOSE_PROFILE, %iniFilePath%, BUTTON_OPTION, CHOOSE_PROFILE
+IniRead, SINGLE_SCAN, %iniFilePath%, BUTTON_OPTION, SINGLE_SCAN
+IniRead, MULTIPLE_SCAN, %iniFilePath%, BUTTON_OPTION, MULTIPLE_SCAN
+IniRead, SINGLE_FILE, %iniFilePath%, BUTTON_OPTION, SINGLE_FILE
+IniRead, FILE_PATH_NAME, %iniFilePath%, BUTTON_OPTION, FILE_PATH_NAME
+IniRead, START_BUTTON, %iniFilePath%, BUTTON_OPTION, START_BUTTON
+IniRead, NEXT_SCAN, %iniFilePath%, BUTTON_OPTION, NEXT_SCAN
+IniRead, FINISH_SCAN, %iniFilePath%, BUTTON_OPTION, FINISH_SCAN
 
 
+; ####### ASSIGNING AS GLOBAL VARIABLES ##########
+global MAIN_WINDOW
+global WINDOW_SECOND
+global WINDOW_THIRD
+
+global CHOOSE_PROFILE
+global SINGLE_SCAN
+global MULTIPLE_SCAN
+global SINGLE_FILE
+global FILE_PATH_NAME
+global START_BUTTON
+
+global NEXT_SCAN
+global FINISH_SCAN
 
 
 
 /*
+
 global MAIN_WINDOW := "Scan Software"
 global WINDOW_SECOND := "Batch Scan"
 global WINDOW_THIRD := "Next Scan"
@@ -42,9 +56,8 @@ global START_BUTTON := "WindowsForms10.BUTTON.app.0.212cd02_r6_ad113"
 
 global NEXT_SCAN := "WindowsForms10.BUTTON.app.0.7afcd6_r6_ad12"
 global FINISH_SCAN := "WindowsForms10.BUTTON.app.0.7afcd6_r6_ad11"
+
 */
-
-
 
 open_app(win_title){
     IfWinNotExist, %win_title%
