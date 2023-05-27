@@ -2,11 +2,62 @@
 
 iniFilePath := "..\controls.ini"
 
-global window_list = ["MAIN_WINDOW", "WINDOW_SECOND", "WINDOW_THIRD"]
+; This script converts the INI file keys and values into a dictionary.
+; The INI file must be in the current working directory.
 
-for index, item in window_list
-    IniRead, %item%, %iniFilePath%, WINDOW, %item%
-    MsgBox, %item%
+
+; Create a new dictionary object
+MyDictionary := {}
+
+; Read the INI file line by line
+FileRead, FileContent, % iniFilePath
+
+; Split the content into lines
+StringSplit, Lines, FileContent, `n
+
+; Loop through each line
+Loop, % Lines.Length()
+{
+    line := Lines%A_Index%
+    
+    ; Split the line into key and value
+    StringSplit, Parts, line, =
+    
+    ; Extract the key and value
+    Key := Trim(Parts1)
+    Value := Trim(Parts2)
+    
+    ; Add the key and value to the dictionary
+    MyDictionary[Key] := Value
+}
+
+; Display the dictionary
+MsgBox, % MyDictionary
+
+
+
+; Enumerate the array's contents:
+; For index, value in buttons
+;     MsgBox %value%
+
+
+
+; global MAIN_WINDOW
+; global WINDOW_SECOND
+; global WINDOW_THIRD
+
+; variables := ["MAIN_WINDOW", "WINDOW_SECOND", "WINDOW_THIRD"]
+
+; Loop, % variables.Length()
+; {
+;     variable := variables%A_Index%
+;     IniRead, %variable%, %iniFilePath%, WINDOW, %variable%
+;     global %variable%
+; }
+
+; MsgBox, % MAIN_WINDOW
+; MsgBox, % WINDOW_SECOND
+; MsgBox, % WINDOW_THIRD
 
 
 /*

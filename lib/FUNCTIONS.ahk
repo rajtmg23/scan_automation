@@ -11,6 +11,10 @@ IniRead, MAIN_WINDOW, %iniFilePath%, WINDOW, MAIN_WINDOW
 IniRead, WINDOW_SECOND, %iniFilePath%, WINDOW, WINDOW_SECOND
 IniRead, WINDOW_THIRD, %iniFilePath%, WINDOW, WINDOW_THIRD
 
+; ####### ASSIGNING AS GLOBAL VARIABLES ##########
+global MAIN_WINDOW
+global WINDOW_SECOND
+global WINDOW_THIRD
 
 
 ; ######### FOR BUTTONS SECTION ############
@@ -25,10 +29,6 @@ IniRead, FINISH_SCAN, %iniFilePath%, BUTTON_OPTION, FINISH_SCAN
 
 
 ; ####### ASSIGNING AS GLOBAL VARIABLES ##########
-global MAIN_WINDOW
-global WINDOW_SECOND
-global WINDOW_THIRD
-
 global CHOOSE_PROFILE
 global SINGLE_SCAN
 global MULTIPLE_SCAN
