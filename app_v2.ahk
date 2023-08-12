@@ -19,14 +19,15 @@ iniFilePath := "C:\Scan\Soft\key.txt"
 FileRead, KeyFileContent, %iniFilePath%
 
 ; Define your variable for comparison
-ScriptKey := "raju_9842711951"
+ProductKey := "<product_key>"
 
 ; Compare the file content with the variable
-if (KeyFileContent != ScriptKey)
+if (KeyFileContent != ProductKey)
     {
-        MsgBox, Key file missing. Plz contact .........
+        MsgBox, Product Key file missing. Plz contact .........
         ExitApp
     }
+
 #Include <FUNCTIONS>
 
 open_app("Scan Software")
