@@ -1,5 +1,6 @@
 #SingleInstance, Force
-; #NoTrayIcon
+#NoTrayIcon
+Menu, Tray, Icon, custom_icon.ico
 
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -11,15 +12,22 @@ SetWinDelay, -1
 SetBatchLines, -1
 SetTitleMatchMode, 2
 
+; Construct the full path to the key file using the script directory
+iniFilePath := "C:\Scan\Soft\key.txt"
+
+; Read the content of the text file into a variable
+FileRead, KeyFileContent, %iniFilePath%
+
+; Define your variable for comparison
+ScriptKey := "raju_9842711951"
+
+; Compare the file content with the variable
+if (KeyFileContent != ScriptKey)
+    {
+        MsgBox, Key file missing. Plz contact .........
+        ExitApp
+    }
 #Include <FUNCTIONS>
-#Include <MENU>
-
-; if !FileExist("C:\Scan\Soft\win_32.dll")
-;     {
-;         MsgBox,  , INFO, Key File Missing.
-;         ExitApp
-;     }
-
 
 open_app("Scan Software")
 
@@ -36,7 +44,7 @@ ScreenHeight := A_ScreenHeight
 
 ; Calculate the desired x and y coordinates
 GuiX := 0
-GuiY := ScreenHeight - 150
+GuiY := ScreenHeight - 110
 
 Gui Show, w220 h40 x%GuiX% y%GuiY%, Scan Documents
 return
@@ -55,14 +63,12 @@ return
 ExecuteFunction2:
     ; Action for Button 2
     scan_profile(2)
-    ContinueOrEnd()
     ; MsgBox, , INFO, Button 2 was clicked!
 return
 
 ExecuteFunction3:
     ; Action for Button 3
     scan_profile(3)
-    ContinueOrEnd()
     ; MsgBox, , INFO, Button 3 was clicked!
 return
 

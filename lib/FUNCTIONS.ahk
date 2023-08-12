@@ -12,9 +12,7 @@ IniRead, WINDOW_SECOND, %iniFilePath%, WINDOW, WINDOW_SECOND
 IniRead, WINDOW_THIRD, %iniFilePath%, WINDOW, WINDOW_THIRD
 
 ; ####### ASSIGNING AS GLOBAL VARIABLES ##########
-global MAIN_WINDOW
-global WINDOW_SECOND
-global WINDOW_THIRD
+global MAIN_WINDOW, WINDOW_SECOND, WINDOW_THIRD
 
 
 ; ######### FOR BUTTONS SECTION ############
@@ -29,40 +27,13 @@ IniRead, FINISH_SCAN, %iniFilePath%, BUTTON_OPTION, FINISH_SCAN
 
 
 ; ####### ASSIGNING AS GLOBAL VARIABLES ##########
-global CHOOSE_PROFILE
-global SINGLE_SCAN
-global MULTIPLE_SCAN
-global SINGLE_FILE
-global FILE_PATH_NAME
-global START_BUTTON
+global CHOOSE_PROFILE, SINGLE_SCAN, MULTIPLE_SCAN, SINGLE_FILE, FILE_PATH_NAME, START_BUTTON, NEXT_SCAN, FINISH_SCAN
 
-global NEXT_SCAN
-global FINISH_SCAN
-
-
-
-/*
-
-global MAIN_WINDOW := "Scan Software"
-global WINDOW_SECOND := "Batch Scan"
-global WINDOW_THIRD := "Next Scan"
-
-global CHOOSE_PROFILE := "WindowsForms10.COMBOBOX.app.0.212cd02_r6_ad11"
-global SINGLE_SCAN := "WindowsForms10.BUTTON.app.0.212cd02_r6_ad110"
-global MULTIPLE_SCAN := "WindowsForms10.BUTTON.app.0.212cd02_r6_ad18"
-global SINGLE_FILE := "WindowsForms10.BUTTON.app.0.212cd02_r6_ad16"
-global FILE_PATH_NAME := "WindowsForms10.EDIT.app.0.212cd02_r6_ad11"
-global START_BUTTON := "WindowsForms10.BUTTON.app.0.212cd02_r6_ad113"
-
-global NEXT_SCAN := "WindowsForms10.BUTTON.app.0.7afcd6_r6_ad12"
-global FINISH_SCAN := "WindowsForms10.BUTTON.app.0.7afcd6_r6_ad11"
-
-*/
 
 open_app(win_title){
     IfWinNotExist, %win_title%
     {
-        Run, C:\Program Files (x86)\NAPS2\NAPS2.exe
+        Run, ".\naps2\NAPS2.exe"
         WinWait, Not Another PDF Scanner 2
         WinGetTitle, Title
         ; MsgBox, The second window is %WINDOW_SECOND%.
@@ -99,31 +70,16 @@ scan_profile(profileNum) {
     Sleep, 100
     ControlSetText, %FILE_PATH_NAME%, C:\Scan\%profileName%-$(nnn).pdf, %WINDOW_SECOND%
     Sleep, 100
-    ; ControlClick, %START_BUTTON%, %WINDOW_SECOND%,, Left, 1,  NA
-    MsgBox, , INFO, Start Button Clicked.
-    WinClose, %WINDOW_SECOND%
+    ControlClick, %START_BUTTON%, %WINDOW_SECOND%,, Left, 1,  NA
+    ;MsgBox, , INFO, Start Button Clicked.
+    ;WinClose, %WINDOW_SECOND%
 }
 
-
-ContinueOrEnd() {
-    IfWinExist, %WINDOW_THIRD%
-    {
-        MsgBox, 4,, Scan Next page..
-        IfMsgBox Yes
-        {
-            ; Perform certain action here
-            ControlClick, %NEXT_SCAN%, %WINDOW_THIRD%,, Left, 1, NA
-            ContinueOrEnd()
-            ; MsgBox, The process will continue.
-        }
-        else
-        {
-            ; Close the specific window here
-            ControlClick, %FINISH_SCAN%, %WINDOW_THIRD%,, Left, 1, NA
-            WinClose, %WINDOW_THIRD%
-            WinClose, %WINDOW_SECOND%
-        }
-    }
+IfWinExist, Scan Documents
+{
+    ^1::scan_profile(1)
+    ^2::scan_profile(2)
+    ^3::scan_profile(3)
+    return
 }
-
 
